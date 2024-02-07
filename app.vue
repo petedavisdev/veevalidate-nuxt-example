@@ -1,21 +1,26 @@
-<script setup>
-import { useForm } from 'vee-validate';
+<script setup lang="ts">
+import { useField, useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import { z } from 'zod';
 
-const { errors, defineField } = useForm({
-	validationSchema: toTypedSchema(
-		z.object({
-			email: z.string().min(1).email(),
-		})
-	),
+const rawValidationSchema = z.object({
+	email: z.string().min(1).email(),
 });
 
-const [email, emailAttrs] = defineField('email');
+type FormSchema = z.input<typeof rawValidationSchema>;
+const validationSchema = toTypedSchema(rawValidationSchema);
+
+const { handleSubmit } = useForm({
+	validationSchema,
+});
+
+const { value: email } = useField<FormSchema['email']>('email');
 </script>
 
 <template>
-	<AppField name="email" label="Email">
-		<input v-model="email" v-bind="emailAttrs" />
-	</AppField>
+	<form @submit="handleSubmit">
+		<AppField name="email" label="Email">
+			<input v-model="email" />
+		</AppField>
+	</form>
 </template>
