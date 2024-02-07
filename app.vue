@@ -19,8 +19,8 @@ const { value: email } = useField<FormSchema['email']>('email');
 
 <template>
 	<form @submit="handleSubmit">
-		<AppField name="email" label="Email">
-			<input v-model="email" />
+		<AppField name="email">
+			<AppInput name="email" />
 		</AppField>
 	</form>
 </template>

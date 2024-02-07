@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<label>
-			{{ props.label }}
+			{{ props.name }}
 		</label>
 
 		<slot />
@@ -17,7 +17,6 @@ import { useFieldError } from 'vee-validate';
 
 const props = defineProps<{
 	name: string;
-	label: string;
 }>();
 
 const errorMessage = useFieldError(props.name);
